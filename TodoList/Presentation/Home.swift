@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct Home: View {
-    let tasks: [Task]
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \Task.created) private var tasks: [Task]
     
     var body: some View {
         List(tasks) { task in
@@ -39,5 +41,6 @@ struct Home: View {
 }
 
 #Preview {
-    Home(tasks: TaskStubs.tasks)
+    Home()
+        .modelContainer(previewContainer)
 }
