@@ -13,6 +13,7 @@ struct TodoListApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
+            Task.self,
         ])
 
         let storeURL = URL.documentsDirectory.appending(path: "taskdata.sqlite")
