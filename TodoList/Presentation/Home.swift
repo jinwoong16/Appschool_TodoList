@@ -12,6 +12,8 @@ struct Home: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Task.created) private var tasks: [Task]
     
+    @FocusState private var isFocused: UUID?
+    
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemGreen]
     }
@@ -22,18 +24,21 @@ struct Home: View {
                 @Bindable var task = task
                 HStack {
                     Button {
+                        // TODO: Toggle item in view and database
                         task.completed.toggle()
                     } label: {
                         Image(systemName: task.completed ? "checkmark.square" : "square")
                     }
                     TextField("Emtpy", text: $task.body)
+                        .focused($isFocused, equals: task.id)
                     Spacer()
                     Image(systemName: buildExclmationmark(with: task.priority))
                 }
                 .listSectionSeparator(.hidden)
                 .swipeActions {
                     Button(role: .destructive) {
-                        delete(task: task)
+                        // TODO: Delete item from database
+                        deleteTask(task)
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
@@ -41,10 +46,31 @@ struct Home: View {
             }
             .listStyle(.plain)
             .navigationTitle("To Do")
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button {
+                        addTask()
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                                .symbolRenderingMode(.multicolor)
+                            Text("Add new todo")
+                                .foregroundStyle(.green)
+                        }
+                    }
+                    Spacer()
+                }
+            }
         }
     }
     
-    private func delete(task: Task) {
+    private func addTask() {
+        let emptyTask = Task(completed: false, description: "", priority: .low)
+        modelContext.insert(emptyTask)
+        isFocused = emptyTask.id
+    }
+    
+    private func deleteTask(_ task: Task) {
         
     }
     

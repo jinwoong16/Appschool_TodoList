@@ -16,7 +16,7 @@ let previewContainer: ModelContainer = {
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         TaskStubs.tasks.forEach { container.mainContext.insert($0) }
-        
+    
         return container
     } catch {
         fatalError("Could not create ModelContainer: \(error)")
