@@ -27,17 +27,20 @@ struct Home: View {
                     Button {
                         task.completed.toggle()
                     } label: {
-                        Image(systemName: task.completed ? "checkmark.square" : "square")
+                        Image(systemName: task.completed ? "circle.inset.filled" : "circle")
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(task.completed ? .green : .gray)
                     }
-                    TextField("Emtpy", text: $task.body)
-                        .focused($isFocused, equals: task.id)
-                    Spacer()
                     Image(systemName: buildExclmationmark(with: task.priority))
+                        .foregroundStyle(.green)
+                    TextField("Emtpy", text: $task.body)
+                        .strikethrough(task.completed)
+                        .foregroundStyle(task.completed ? .gray : .primary)
+                        .focused($isFocused, equals: task.id)
                 }
                 .listSectionSeparator(.hidden)
                 .swipeActions {
                     Button(role: .destructive) {
-                        // TODO: Delete item from database
                         deleteTask(task)
                     } label: {
                         Label("Delete", systemImage: "trash")
