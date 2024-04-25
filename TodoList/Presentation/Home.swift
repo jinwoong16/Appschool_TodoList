@@ -82,9 +82,8 @@ struct Home: View {
     }
     
     private func deleteTask(_ task: Task) {
-        
+        modelContext.delete(task)
     }
-    
     
     private func buildExclmationmark(with priority: Priority) -> String {
         switch priority {
