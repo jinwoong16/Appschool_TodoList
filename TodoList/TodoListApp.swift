@@ -18,6 +18,8 @@ struct TodoListApp: App {
 
         let storeURL = URL.documentsDirectory.appending(path: "taskdata.sqlite")
         let modelConfiguration = ModelConfiguration(schema: schema, url: storeURL)
+        
+        debugPrint("DB LOCATION: \(storeURL)")
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
