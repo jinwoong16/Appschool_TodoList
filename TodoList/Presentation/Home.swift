@@ -22,30 +22,7 @@ struct Home: View {
     var body: some View {
         NavigationStack {
             List(tasks) { task in
-                @Bindable var task = task
-                HStack {
-                    Button {
-                        task.completed.toggle()
-                    } label: {
-                        Image(systemName: task.completed ? "circle.inset.filled" : "circle")
-                            .symbolRenderingMode(.hierarchical)
-                            .foregroundStyle(task.completed ? .green : .gray)
-                    }
-                    Image(systemName: buildExclmationmark(with: task.priority))
-                        .foregroundStyle(.green)
-                    TextField("Emtpy", text: $task.body)
-                        .strikethrough(task.completed)
-                        .foregroundStyle(task.completed ? .gray : .primary)
-                        .focused($isFocused, equals: task.id)
-                }
-                .listSectionSeparator(.hidden)
-                .swipeActions {
-                    Button(role: .destructive) {
-                        deleteTask(task)
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                    }
-                }
+                TaskRow(task: task, isFocused: $isFocused)
             }
             .listStyle(.plain)
             .navigationTitle("To Do")
@@ -82,21 +59,6 @@ struct Home: View {
         modelContext.insert(emptyTask)
         isEditing = true
         isFocused = emptyTask.id
-    }
-    
-    private func deleteTask(_ task: Task) {
-        modelContext.delete(task)
-    }
-    
-    private func buildExclmationmark(with priority: Priority) -> String {
-        switch priority {
-            case .high:
-                return "exclamationmark"
-            case .medium:
-                return "exclamationmark.2"
-            case .low:
-                return "exclamationmark.3"
-        }
     }
 }
 
