@@ -7,6 +7,7 @@
 
 import WidgetKit
 import SwiftUI
+import SwiftData
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -41,26 +42,50 @@ struct SimpleEntry: TimelineEntry {
 
 struct TodoListWidgetEntryView : View {
     var entry: Provider.Entry
+    @Query(sort: \Task.created) private var tasks: [Task]
 
     var body: some View {
         VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+            ForEach(tasks) { task in
+                HStack {
+                    Image(systemName: task.completed ? "circle.inset.filled" : "circle")
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(task.completed ? .green : .gray)
+                    Text(task.body)
+                        .strikethrough(task.completed)
+                        .foregroundStyle(task.completed ? .gray : .primary)
+                }
+            }
         }
     }
 }
 
 struct TodoListWidget: Widget {
     let kind: String = "TodoListWidget"
+    
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Task.self,
+        ])
+
+//        let storeURL = URL.documentsDirectory.appending(path: "taskdata.sqlite")
+        let modelConfiguration = ModelConfiguration(schema: schema)
+        
+//        debugPrint("DB LOCATION: \(storeURL)")
+
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                 TodoListWidgetEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
+                    .modelContainer(sharedModelContainer)
             } else {
                 TodoListWidgetEntryView(entry: entry)
                     .padding()
