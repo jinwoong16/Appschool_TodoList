@@ -13,6 +13,7 @@ struct Home: View {
     @Query(sort: \Task.created) private var tasks: [Task]
     
     @FocusState private var isFocused: UUID?
+    @State private var isEditing: Bool = false
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemGreen]
@@ -24,7 +25,6 @@ struct Home: View {
                 @Bindable var task = task
                 HStack {
                     Button {
-                        // TODO: Toggle item in view and database
                         task.completed.toggle()
                     } label: {
                         Image(systemName: task.completed ? "checkmark.square" : "square")
@@ -47,6 +47,16 @@ struct Home: View {
             .listStyle(.plain)
             .navigationTitle("To Do")
             .toolbar {
+                if isEditing {
+                    ToolbarItemGroup {
+                        Button {
+                            isEditing = false
+                            isFocused = nil
+                        } label: {
+                            Text("Done")
+                        }
+                    }
+                }
                 ToolbarItemGroup(placement: .bottomBar) {
                     Button {
                         addTask()
@@ -67,6 +77,7 @@ struct Home: View {
     private func addTask() {
         let emptyTask = Task(completed: false, description: "", priority: .low)
         modelContext.insert(emptyTask)
+        isEditing = true
         isFocused = emptyTask.id
     }
     
