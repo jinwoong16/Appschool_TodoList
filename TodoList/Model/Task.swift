@@ -14,12 +14,20 @@ final class Task {
     var completed: Bool
     var body: String
     var priority: Priority
+    let created: Date
     
-    init(id: UUID = UUID(), completed: Bool, description: String, priority: Priority) {
+    init(
+        id: UUID = UUID(),
+        completed: Bool,
+        description: String,
+        priority: Priority,
+        created: Date = Date()
+    ) {
         self.id = id
         self.completed = completed
         self.body = description
         self.priority = priority
+        self.created = created
     }
 }
 
