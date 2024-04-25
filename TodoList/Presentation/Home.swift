@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct Home: View {
+    let tasks: [Task]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(tasks) { task in
+            HStack {
+                Button {
+                    task.completed.toggle()
+                } label: {
+                    Image(systemName: task.completed ? "checkmark.square" : "square")
+                }
+                Text(task.body)
+                Spacer()
+                Image(systemName: buildExclmationmark(with: task.priority))
+            }
+        }
+    }
+    
+    
+    func buildExclmationmark(with priority: Priority) -> String {
+        switch priority {
+            case .high:
+                return "exclamationmark"
+            case .medium:
+                return "exclamationmark.2"
+            case .low:
+                return "exclamationmark.3"
+        }
     }
 }
 
 #Preview {
-    Home()
+    Home(tasks: TaskStubs.tasks)
 }

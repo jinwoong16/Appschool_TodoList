@@ -19,7 +19,6 @@
 		83F235A92BDA0F1C00656920 /* TaskStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F235A82BDA0F1C00656920 /* TaskStubs.swift */; };
 		83F235AC2BDA124900656920 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F235AA2BDA11B100656920 /* PreviewContainer.swift */; };
 		83F235AF2BDA13CF00656920 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F235AE2BDA13CF00656920 /* Home.swift */; };
-		83F235B22BDA13FA00656920 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F235B12BDA13FA00656920 /* TaskRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +55,6 @@
 		83F235A82BDA0F1C00656920 /* TaskStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStubs.swift; sourceTree = "<group>"; };
 		83F235AA2BDA11B100656920 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 		83F235AE2BDA13CF00656920 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
-		83F235B12BDA13FA00656920 /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				83F235AE2BDA13CF00656920 /* Home.swift */,
-				83F235B12BDA13FA00656920 /* TaskRow.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -296,7 +293,6 @@
 				83F235AC2BDA124900656920 /* PreviewContainer.swift in Sources */,
 				83F235A92BDA0F1C00656920 /* TaskStubs.swift in Sources */,
 				83F235A72BDA0EC000656920 /* Task.swift in Sources */,
-				83F235B22BDA13FA00656920 /* TaskRow.swift in Sources */,
 				83F2357B2BDA0E0800656920 /* ContentView.swift in Sources */,
 				83F2357D2BDA0E0800656920 /* Item.swift in Sources */,
 				83F235792BDA0E0800656920 /* TodoListApp.swift in Sources */,
