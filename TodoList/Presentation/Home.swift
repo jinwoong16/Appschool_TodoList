@@ -12,6 +12,10 @@ struct Home: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Task.created) private var tasks: [Task]
     
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemGreen]
+    }
+    
     var body: some View {
         NavigationStack {
             List(tasks) { task in
@@ -26,6 +30,7 @@ struct Home: View {
                     Spacer()
                     Image(systemName: buildExclmationmark(with: task.priority))
                 }
+                .listSectionSeparator(.hidden)
                 .swipeActions {
                     Button(role: .destructive) {
                         delete(task: task)
@@ -35,6 +40,7 @@ struct Home: View {
                 }
             }
             .listStyle(.plain)
+            .navigationTitle("To Do")
         }
     }
     
