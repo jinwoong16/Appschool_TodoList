@@ -13,22 +13,37 @@ struct Home: View {
     @Query(sort: \Task.created) private var tasks: [Task]
     
     var body: some View {
-        List(tasks) { task in
-            HStack {
-                Button {
-                    task.completed.toggle()
-                } label: {
-                    Image(systemName: task.completed ? "checkmark.square" : "square")
+        NavigationStack {
+            List(tasks) { task in
+                @Bindable var task = task
+                HStack {
+                    Button {
+                        task.completed.toggle()
+                    } label: {
+                        Image(systemName: task.completed ? "checkmark.square" : "square")
+                    }
+                    TextField("Emtpy", text: $task.body)
+                    Spacer()
+                    Image(systemName: buildExclmationmark(with: task.priority))
                 }
-                Text(task.body)
-                Spacer()
-                Image(systemName: buildExclmationmark(with: task.priority))
+                .swipeActions {
+                    Button(role: .destructive) {
+                        delete(task: task)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
             }
+            .listStyle(.plain)
         }
     }
     
+    private func delete(task: Task) {
+        
+    }
     
-    func buildExclmationmark(with priority: Priority) -> String {
+    
+    private func buildExclmationmark(with priority: Priority) -> String {
         switch priority {
             case .high:
                 return "exclamationmark"
